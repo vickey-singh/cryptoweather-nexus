@@ -94,6 +94,10 @@ Visit: [http://localhost:3000](http://localhost:3000)
 
 ---
 
+### 🔗 Live Demo
+[Check the Live Site](https://cryptoweather-nexus-lndg60yvc-vickey-singhs-projects.vercel.app)
+
+
 ## ✍️ Author
 
 Made with 💻 by [Vickey Singh]

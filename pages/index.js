@@ -15,14 +15,14 @@ export default function Home() {
   const crypto = useSelector((state) => state.crypto.data);
   const news = useSelector((state) => state.news.articles);
 
-  // Fetch all data on first load
+  // Fetch data on load
   useEffect(() => {
     dispatch(fetchWeatherData());
     dispatch(fetchCryptoData());
     dispatch(fetchNewsData());
   }, []);
 
-  // Real-time crypto updates via WebSocket
+  // WebSocket for real-time crypto prices
   useEffect(() => {
     const ws = new WebSocket("wss://ws.coincap.io/prices?assets=bitcoin,ethereum,solana");
 
@@ -42,18 +42,18 @@ export default function Home() {
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mb-4">Weather (Top Cities)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {weather.map((city) => (
-            <div key={city.name} className="bg-gray-800 p-4 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">{city.name}</h3>
-              <p>Temperature: {city.temp}°C</p>
-              <p>Humidity: {city.humidity}%</p>
-              <p>Condition: {city.description}</p>
-              <Link href={`/weather/${city.name}`}>
+          {Array.isArray(weather) &&
+            weather.map((city) => (
+              <div key={city.name} className="bg-gray-800 p-4 rounded-lg shadow">
+                <h3 className="text-lg font-semibold">{city.name}</h3>
+                <p>Temperature: {city.temp}°C</p>
+                <p>Humidity: {city.humidity}%</p>
+                <p>Condition: {city.description}</p>
+                <Link href={`/weather/${city.name}`}>
                   <button className="bg-blue-600 px-3 py-1 mt-2 rounded">View Details</button>
                 </Link>
-                
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
       </section>
 
@@ -66,11 +66,9 @@ export default function Home() {
               <div key={coin.id} className="bg-gray-800 p-4 rounded-lg shadow">
                 <h3 className="text-lg font-semibold">{coin.name}</h3>
                 <p>Price: ${parseFloat(coin.priceUsd).toFixed(2)}</p>
-                
-                <Link href={`/crypto/${coin.id}`} >
+                <Link href={`/crypto/${coin.id}`}>
                   <button className="bg-blue-600 px-3 py-1 mt-2 rounded">View Details</button>
                 </Link>
-
               </div>
             ))}
         </div>

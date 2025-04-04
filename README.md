@@ -42,7 +42,7 @@
 
 ### 1. **Clone the Repo**
 ```bash
-git clone https://github.com/YOUR_USERNAME/cryptoweather-nexus.git
+git clone https://github.com/vickey-singh/cryptoweather-nexus.git
 cd cryptoweather-nexus
 ```
 

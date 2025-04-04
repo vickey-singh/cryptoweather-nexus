@@ -6,14 +6,14 @@ import {
   fetchNewsData,
   searchWeatherByCity,
   searchCryptoByName,
-  searchNewsByKeyword,
+  searchNewsByQuery,
 } from "@/store/actions";
 import { updatePrices } from "@/store/websocketSlice";
 import Link from "next/link";
 
-
 export default function Home() {
   const dispatch = useDispatch();
+
   const weather = useSelector((state) => state.weather.data);
   const crypto = useSelector((state) => state.crypto.data);
   const news = useSelector((state) => state.news.articles);
@@ -23,20 +23,24 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState([]);
   const [notFound, setNotFound] = useState(false);
 
+  // Fetch data on load
   useEffect(() => {
     dispatch(fetchWeatherData());
     dispatch(fetchCryptoData());
     dispatch(fetchNewsData());
-  }, []);
+  }, [dispatch]);
 
+  // WebSocket for real-time crypto prices
   useEffect(() => {
     const ws = new WebSocket("wss://ws.coincap.io/prices?assets=bitcoin,ethereum,solana");
+
     ws.onmessage = (msg) => {
       const priceUpdate = JSON.parse(msg.data);
       dispatch(updatePrices(priceUpdate));
     };
+
     return () => ws.close();
-  }, []);
+  }, [dispatch]);
 
   const handleSearch = async () => {
     setNotFound(false);
@@ -51,15 +55,19 @@ export default function Home() {
       } else {
         setNotFound(true);
       }
-    } else if (searchType === "crypto") {
+    }
+
+    if (searchType === "crypto") {
       const result = await dispatch(searchCryptoByName(searchQuery));
-      if (result?.payload?.id) {
-        setSearchResults([result.payload]);
+      if (result?.payload?.length > 0) {
+        setSearchResults(result.payload);
       } else {
         setNotFound(true);
       }
-    } else if (searchType === "news") {
-      const result = await dispatch(searchNewsByKeyword(searchQuery));
+    }
+
+    if (searchType === "news") {
+      const result = await dispatch(searchNewsByQuery(searchQuery));
       if (result?.payload?.length > 0) {
         setSearchResults(result.payload);
       } else {
@@ -72,42 +80,40 @@ export default function Home() {
     <div className="p-6 text-white bg-black min-h-screen">
       <h1 className="text-4xl font-bold mb-6">CryptoWeather Nexus</h1>
 
-      {/* Search Bar */}
-      <div className="mb-10 flex flex-col sm:flex-row gap-3 items-center">
-        <input
-          type="text"
-          placeholder="Enter city / crypto / topic..."
-          className="p-3 rounded-xl text-black flex-1 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <select
-          className="p-3 rounded-xl text-black bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={searchType}
-          onChange={(e) => setSearchType(e.target.value)}
-        >
-          <option value="weather">Weather</option>
-          <option value="crypto">Crypto</option>
-          <option value="news">News</option>
-        </select>
-        <button
-          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl shadow-lg hover:opacity-90 transition"
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-      </div>
-
-      {/* Not Found Message */}
-      {notFound && (
-        <p className="text-red-400 font-semibold mb-6">
-          No results found for "{searchQuery}" in {searchType}.
+      {/* Search Section */}
+      <div className="mb-10">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search..."
+            className="flex-1 p-2 rounded text-black"
+          />
+          <select
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+            className="p-2 rounded text-black"
+          >
+            <option value="weather">Weather</option>
+            <option value="crypto">Crypto</option>
+            <option value="news">News</option>
+          </select>
+          <button
+            onClick={handleSearch}
+            className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Search
+          </button>
+        </div>
+        <p className="mt-2 text-sm text-gray-400">
+          Type something to search like &quot;London&quot;, &quot;Bitcoin&quot;, or &quot;Ethereum&quot;.
         </p>
-      )}
+      </div>
 
       {/* Search Results */}
       {searchResults.length > 0 && (
-        <section className="mb-10">
+        <div className="mb-10">
           <h2 className="text-2xl font-semibold mb-4">Search Results</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {searchType === "weather" &&
@@ -148,10 +154,16 @@ export default function Home() {
                 </a>
               ))}
           </div>
-        </section>
+        </div>
       )}
 
-      {/* Original Weather Section */}
+      {notFound && (
+        <div className="mb-10 text-red-500 text-lg font-semibold">
+          No results found. Please try a different query.
+        </div>
+      )}
+
+      {/* Weather Section */}
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mb-4">Weather (Top Cities)</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

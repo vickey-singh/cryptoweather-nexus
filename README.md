@@ -1,40 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🌦️ CryptoWeather Nexus
 
-## Getting Started
+**CryptoWeather Nexus** is a dynamic Next.js dashboard that brings together weather updates, live cryptocurrency data, and trending crypto news — all in one place. Built for both functionality and aesthetics, it provides real-time price updates via WebSockets, detailed pages for cities and coins, and the ability to manage favorites.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 🌍 **Weather Data** from OpenWeatherMap API
+- 💰 **Cryptocurrency Prices** using CoinCap API (with WebSocket for real-time updates)
+- 📰 **Crypto News** via NewsData.io
+- 🧠 **Redux Toolkit** for state management
+- 🎨 **Tailwind CSS** for UI styling
+- ⚡ **Dynamic Routing** with detail pages for weather and crypto
+- ⭐ **Favorites** management (crypto)
+- ☁️ **Deployed** on Vercel
+
+---
+
+## 📁 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+/cryptoweather-nexus
+├── pages
+│   ├── index.js                # Home dashboard
+│   ├── crypto/[id].js          # Dynamic detail page for each crypto
+│   └── weather/[id].js        # Dynamic detail page for each city
+├── components                 # Reusable components
+├── store                      # Redux store and slices
+│   ├── weatherSlice.js
+│   ├── cryptoSlice.js
+│   ├── newsSlice.js
+│   ├── websocketSlice.js
+│   └── favoritesSlice.js
+├── public                     # Static files
+└── styles                     # Tailwind + global CSS
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## ⚙️ Setup Instructions
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### 1. **Clone the Repo**
+```bash
+git clone https://github.com/YOUR_USERNAME/cryptoweather-nexus.git
+cd cryptoweather-nexus
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### 2. **Install Dependencies**
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. **Environment Variables**
+Create a `.env.local` file:
+```env
+NEXT_PUBLIC_WEATHER_API_KEY=your_openweather_api_key
+NEXT_PUBLIC_NEWS_API_KEY=your_newsdata_api_key
+```
 
-## Learn More
+> Make sure you have valid API keys for OpenWeatherMap and NewsData.io.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. **Run the App**
+```bash
+npm run dev
+```
+Visit: [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌐 Deployment
 
-## Deploy on Vercel
+### 🔹 **Vercel**
+1. Go to [https://vercel.com](https://vercel.com)
+2. Import your GitHub repository
+3. Set the required environment variables in **Project Settings**
+4. Click **Deploy**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 🧠 Design Decisions
+
+### 🔧 Tech Stack Justification:
+- **Next.js** for fast, SEO-friendly React framework
+- **Tailwind CSS** for utility-first and responsive design
+- **Redux Toolkit** to manage global app state cleanly
+- **WebSocket** for real-time crypto price updates
+- **Dynamic Routing** to scale individual city/crypto detail pages
+
+### 💡 UI/UX Considerations:
+- Dark themed UI for modern feel
+- Responsive layout for mobile/desktop
+- Clean information blocks for readability
+
+---
+
+## ✍️ Author
+
+Made with 💻 by [Vickey Singh]
+
+GitHub: [https://github.com/vickey-singh/cryptoweather-nexus.git]
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+

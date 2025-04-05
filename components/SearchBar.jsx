@@ -12,11 +12,14 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 items-center">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col sm:flex-row gap-3 items-center bg-gray-900 p-4 rounded-lg shadow-md"
+    >
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="p-2 rounded bg-gray-700 text-white"
+        className="p-2 rounded bg-gray-700 text-white border border-gray-500"
       >
         <option value="weather">Weather</option>
         <option value="crypto">Crypto</option>
@@ -28,7 +31,7 @@ export default function SearchBar({ onSearch }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search by name or keyword"
-        className="p-2 rounded bg-gray-800 text-white w-full sm:w-64"
+        className="p-2 rounded bg-white text-black w-full sm:w-64 border border-gray-400"
       />
 
       <button

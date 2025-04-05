@@ -1,3 +1,4 @@
+// store/index.js
 import { configureStore } from "@reduxjs/toolkit";
 import weatherReducer from "./weatherSlice";
 import cryptoReducer from "./cryptoSlice";
@@ -13,6 +14,7 @@ const store = configureStore({
     favorites: favoritesReducer,
     websocket: websocketReducer,
   },
+  devTools: process.env.NODE_ENV !== "production", // 🔍 Enable Redux DevTools only in dev
 });
 
 export default store;

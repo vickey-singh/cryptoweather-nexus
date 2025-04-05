@@ -9,8 +9,20 @@ const cryptoSlice = createSlice({
     setCrypto: (state, action) => {
       state.data = action.payload;
     },
+    updatePrices: (state, action) => {
+      const priceUpdates = action.payload;
+      state.data = state.data.map((coin) => {
+        if (priceUpdates[coin.id]) {
+          return {
+            ...coin,
+            priceUsd: priceUpdates[coin.id],
+          };
+        }
+        return coin;
+      });
+    },
   },
 });
 
-export const { setCrypto } = cryptoSlice.actions;
+export const { setCrypto, updatePrices } = cryptoSlice.actions;
 export default cryptoSlice.reducer;

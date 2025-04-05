@@ -8,10 +8,12 @@ const websocketSlice = createSlice({
   },
   reducers: {
     updatePrices: (state, action) => {
-      state.prices = {
-        ...state.prices,
-        ...action.payload,
-      };
+      if (action.payload && typeof action.payload === "object") {
+        state.prices = {
+          ...state.prices,
+          ...action.payload,
+        };
+      }
     },
   },
 });

@@ -7,7 +7,7 @@ const newsSlice = createSlice({
   },
   reducers: {
     setNews: (state, action) => {
-      state.articles = action.payload;
+      state.articles = Array.isArray(action.payload) ? action.payload : [];
     },
   },
 });

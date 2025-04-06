@@ -55,8 +55,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-6">
+    <div className="min-h-screen bg-gray-900 text-white px-4 py-8 max-w-7xl mx-auto">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-6">
         CryptoWeather Nexus 🌦️💰📰
       </h1>
 
@@ -69,9 +69,9 @@ export default function Home() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <div className="flex justify-between items-center mt-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-2 gap-2">
           <select
-            className="bg-gray-700 p-2 rounded"
+            className="bg-gray-700 p-2 rounded w-full sm:w-auto"
             value={searchType}
             onChange={(e) => setSearchType(e.target.value)}
           >
@@ -81,7 +81,7 @@ export default function Home() {
           </select>
           <button
             onClick={handleSearch}
-            className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-blue-600 w-full sm:w-auto px-4 py-2 rounded hover:bg-blue-700"
           >
             Search
           </button>
@@ -92,7 +92,7 @@ export default function Home() {
       {loadingSearch ? (
         <p className="text-center mb-4">Loading...</p>
       ) : searchResults.length > 0 ? (
-        <div className="grid md:grid-cols-2 gap-4 mb-8">
+        <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {searchResults.map((item, index) => (
             <div key={index} className="bg-gray-800 p-4 rounded shadow">
               {searchType === "weather" && (
@@ -142,35 +142,47 @@ export default function Home() {
 
       {/* 🌦️ Weather Section */}
       <section className="mb-10">
-        <h2 className="text-3xl font-bold mb-4">Weather (Top Cities)</h2>
-        <div className="grid md:grid-cols-3 gap-4">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4">Weather (Top Cities)</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {weather.map((city, index) => (
-            <div
-              key={index}
-              className="bg-gray-800 text-white rounded-lg p-4 shadow hover:shadow-lg transition duration-200"
-            >
-              <Link href={`/weather/${encodeURIComponent(city.name)}`}>
-                <h3 className="text-xl font-semibold cursor-pointer hover:text-blue-400">
-                  {city.name}
-                </h3>
-              </Link>
-              <p className="capitalize">{city.description}</p>
-              <p>🌡️ Temp: {city.temp}°C</p>
-              <p>💧 Humidity: {city.humidity}%</p>
-            </div>
+            <Link key={index} href={`/weather/${encodeURIComponent(city.name)}`}>
+              <div className="bg-gray-800 rounded-lg p-4 shadow hover:bg-gray-700 transition cursor-pointer">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={`https://openweathermap.org/img/wn/${city.icon || '10d'}@4x.png`}
+                    alt="weather icon"
+                    className="w-20 h-20"
+                  />
+                  <div>
+                    <h3 className="text-xl font-semibold hover:text-blue-400">{city.name}</h3>
+                    <p className="capitalize">{city.description}</p>
+                    <p className="text-lg">
+                      🌡️ <span className="text-2xl font-bold">{city.temp}°C</span> | 💧 Humidity: {city.humidity}%
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
 
       {/* 💰 Crypto Section */}
       <section className="mb-10">
-        <h2 className="text-3xl font-bold mb-4">Cryptocurrency</h2>
-        <div className="grid md:grid-cols-3 gap-4">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4">Cryptocurrency</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {crypto.map((coin, index) => (
             <Link key={index} href={`/crypto/${coin.id}`}>
-              <div className="bg-gray-800 p-4 rounded shadow hover:bg-gray-700 transition cursor-pointer">
+              <div className="bg-gray-800 p-4 rounded shadow hover:bg-gray-700 transition cursor-pointer text-center">
+                {coin.image && (
+                  <img
+                    src={coin.image}
+                    alt={coin.name}
+                    className="w-12 h-12 mx-auto mb-2"
+                  />
+                )}
                 <h3 className="text-xl font-semibold">{coin.name}</h3>
-                <p>Price: ${parseFloat(coin.priceUsd).toFixed(2)}</p>
+                <p>Price: ${coin.current_price}</p>
               </div>
             </Link>
           ))}
@@ -179,8 +191,8 @@ export default function Home() {
 
       {/* 📰 News Section */}
       <section>
-        <h2 className="text-3xl font-bold mb-4">Crypto News</h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4">Crypto News</h2>
+        <div className="grid sm:grid-cols-2 gap-4">
           {news.map((article, index) => (
             <a
               key={index}
@@ -189,8 +201,19 @@ export default function Home() {
               rel="noopener noreferrer"
               className="block bg-gray-800 p-4 rounded hover:bg-gray-700 transition"
             >
-              <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
-              <p className="text-gray-400">{article.description}</p>
+              <div className="flex gap-4">
+                {article.image_url && (
+                  <img
+                    src={article.image_url}
+                    alt={article.title}
+                    className="w-20 h-20 object-cover rounded"
+                  />
+                )}
+                <div>
+                  <h3 className="text-xl font-semibold mb-1">{article.title}</h3>
+                  <p className="text-gray-400 text-sm line-clamp-3">{article.description}</p>
+                </div>
+              </div>
             </a>
           ))}
         </div>

@@ -34,17 +34,17 @@ export const fetchWeatherData = () => async (dispatch) => {
   }
 };
 
-// 💰 Crypto Data
+// 💰 Crypto Data from CoinGecko (top 6)
 export const fetchCryptoData = () => async (dispatch) => {
   try {
-    const res = await fetch("https://api.coincap.io/v2/assets?limit=5");
+    const res = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=6&page=1");
     const data = await res.json();
 
-    if (!Array.isArray(data.data)) {
+    if (!Array.isArray(data)) {
       throw new Error("Invalid crypto data format");
     }
 
-    dispatch(setCrypto(data.data));
+    dispatch(setCrypto(data));
   } catch (error) {
     console.error("Crypto fetch error:", error.message);
   }
@@ -99,14 +99,14 @@ export const searchWeatherByCity = (city) => async () => {
 // 🔍 Search Crypto by Name
 export const searchCryptoByName = (name) => async () => {
   try {
-    const res = await fetch("https://api.coincap.io/v2/assets");
+    const res = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=100");
     const data = await res.json();
 
-    if (!Array.isArray(data.data)) {
+    if (!Array.isArray(data)) {
       throw new Error("Crypto search data format incorrect");
     }
 
-    const match = data.data.find((coin) =>
+    const match = data.find((coin) =>
       coin.name.toLowerCase().includes(name.toLowerCase())
     );
     return { payload: match || null };

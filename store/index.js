@@ -5,6 +5,7 @@ import cryptoReducer from "./cryptoSlice";
 import newsReducer from "./newsSlice";
 import favoritesReducer from "./favoritesSlice";
 import websocketReducer from "./websocketSlice";
+import settingsReducer from "./settingsSlice"; // 👈 Import settings reducer
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     news: newsReducer,
     favorites: favoritesReducer,
     websocket: websocketReducer,
+    settings: settingsReducer, // 👈 Add to store
   },
   devTools: process.env.NODE_ENV !== "production", // 🔍 Enable Redux DevTools only in dev
 });

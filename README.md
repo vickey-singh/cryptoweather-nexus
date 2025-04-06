@@ -95,14 +95,12 @@ Visit: [http://localhost:3000](http://localhost:3000)
 ---
 
 ### 🔗 Live Demo
-[Check the Live Site](https://cryptoweather-nexus-lndg60yvc-vickey-singhs-projects.vercel.app)
+[Check the Live Site]
 
 
 ## ✍️ Author
 
 Made with 💻 by [Vickey Singh]
-
-GitHub: [https://github.com/vickey-singh/cryptoweather-nexus.git]
 
 ---
 
@@ -110,3 +108,7 @@ GitHub: [https://github.com/vickey-singh/cryptoweather-nexus.git]
 
 This project is licensed under the MIT License.
 
+## 📧 Contact
+For any queries or collaboration opportunities, reach out via the contact section on the website.
+
+📧 Email: vickeykumarsingh.edu@gmail.com

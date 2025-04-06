@@ -1,3 +1,4 @@
+// store/newsSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const newsSlice = createSlice({
@@ -7,7 +8,7 @@ const newsSlice = createSlice({
   },
   reducers: {
     setNews: (state, action) => {
-      state.articles = Array.isArray(action.payload) ? action.payload : [];
+      state.articles = action.payload;
     },
   },
 });

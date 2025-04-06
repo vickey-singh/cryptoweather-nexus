@@ -95,12 +95,12 @@ Visit: [http://localhost:3000](http://localhost:3000)
 ---
 
 ### 🔗 Live Demo
-[Check the Live Site]
+[Check the Live Site] https://thecryptoweather-nexus.netlify.app/
 
 
 ## ✍️ Author
 
-Made with 💻 by [Vickey Singh]
+Made with 💻 by Vickey Singh
 
 ---
 
